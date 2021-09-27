@@ -1,0 +1,19 @@
+[
+    {
+        "id": 1,
+        "titulo": "Senhor dos Anéis",
+        "tipo": "Ficção"
+    },
+
+    {
+        "id": 2,
+        "titulo": "Invocação do Mal",
+        "tipo": "Terror"
+    },
+
+    {
+        "id": 3,
+        "titulo": "Hunter X Hunter: The Last Mission",
+        "tipo": "Anime"
+    }
+]
