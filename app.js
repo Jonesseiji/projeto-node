@@ -1,13 +1,24 @@
 import express from "express";
-import livros from "./data/livros.json";
+import livrosRoute from "./routes/livrosRoute.js";
+import morgan from "morgan";
 
 const PORTA = 3000;
 const server = express();
 
 const criarUrl = (version, path) => `/api/${version}/${path}`;
+const LIVROS_URL = criarUrl("v1", "livros");
 
-server.get(criarUrl("v1", "livros"), (req, res) => {
-    res.json(livros);
+server.use(morgan("tiny"));
+server.use(LIVROS_URL, livrosRoute);
+
+server.get("/manipulando-rota", (req, res, next) =>{
+    res.send("Aprendendo route handler");
+    next();
+}, (req, res, next) =>{
+    console.log("segundo handler");
+    next();
+}, (req, res) => {
+    console.log("terceiro handler");
 });
 
 server.listen (3000, () => {

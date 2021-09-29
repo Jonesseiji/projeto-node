@@ -1,19 +1,19 @@
 [
     {
         "id": 1,
-        "titulo": "Senhor dos Anéis",
+        "titulo": "Senhor dos Anéis: A Sociedade do Anél",
         "tipo": "Ficção"
     },
 
     {
         "id": 2,
-        "titulo": "Invocação do Mal",
-        "tipo": "Terror"
+        "titulo": "A Menina que Roubava Livros",
+        "tipo": "Romance, Ficção juvenil, Ficção histórica"
     },
 
     {
         "id": 3,
-        "titulo": "Hunter X Hunter: The Last Mission",
-        "tipo": "Anime"
+        "titulo": "A Sutil Arte De Ligar O Foda-Se",
+        "tipo": "Autoajuda"
     }
 ]
