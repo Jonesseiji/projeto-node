@@ -3,6 +3,8 @@ import livros from "../data/livros.json";
 
 const router = express.Router();
 
+let livrosArray = livros;
+
 router.get("/", (req, res) => {
     res.json(livros);
 });
@@ -20,7 +22,9 @@ router.get("/:id", (req, res) => {
 })
 
 router.post("/", (req, res) => {
-    console.log("tratando post");
+    console.log(req.body);
+    livrosArray.push(req.body);
+    res.status(200).send("Inclusão realizada com sucesso !");
     res.end();
 });
 

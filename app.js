@@ -9,6 +9,7 @@ const criarUrl = (version, path) => `/api/${version}/${path}`;
 const LIVROS_URL = criarUrl("v1", "livros");
 
 server.use(morgan("tiny"));
+server.use(express.json());
 server.use(LIVROS_URL, livrosRoute);
 
 server.get("/manipulando-rota", (req, res, next) =>{
