@@ -77,9 +77,11 @@ router.put("/:id", (req, res) => { //atualiza os dados do livro
     });
 });
 
-router.delete("/", (req, res) => {
-    console.log("tratando delete");
-    res.end();
+router.delete("/:id", (req, res) => {
+    livrosModel.findByIdAndDelete(req.params.id, (err, livro) => {
+        if(err) res.status(500).send(err);
+        res.status(200).send(`Livro com o ID ${req.params.id} deletado com sucesso !`);
+    });
 });
 
 export default router;
