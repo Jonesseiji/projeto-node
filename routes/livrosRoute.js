@@ -1,5 +1,16 @@
 import express from "express";
 import livros from "../data/livros.json";
+import mongoose from "mongoose";
+
+const DB_URL = "mongodb+srv://admin:admin@cluster0.sbrpy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+mongoose.connect(DB_URL, { useUnifiedTopology: true, useNewUrlParser: true });
+
+const db = mongoose.connection;
+
+db.once("open", () => {
+    console.log("Estamos conectados no MDB")
+})
 
 const router = express.Router();
 
