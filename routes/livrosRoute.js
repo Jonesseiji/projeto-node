@@ -9,8 +9,16 @@ mongoose.connect(DB_URL, { useUnifiedTopology: true, useNewUrlParser: true });
 const db = mongoose.connection;
 
 db.once("open", () => {
-    console.log("Estamos conectados no MDB")
-})
+    console.log("Estamos conectados no MDB");
+});
+
+const livrosSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
+    titulo: String,
+    tipo: String
+});
+
+const livrosModel = mongoose.model("Livro", livrosSchema);
 
 const router = express.Router();
 
@@ -33,10 +41,18 @@ router.get("/:id", (req, res) => {
 })
 
 router.post("/", (req, res) => {
-    console.log(req.body);
-    livrosArray.push(req.body);
-    res.status(200).send("Inclusão realizada com sucesso !");
-    res.end();
+
+    const id =  new mongoose.Types.ObjectId(); //atribuindo um valor único ao id dos próximos POST
+    const livroParaSalvar = Object.assign({
+        _id: id,
+    }, req.body);
+
+    const livro = new livrosModel(livroParaSalvar);
+
+    livro.save().then((err, livro) => {
+        if(err) res.status(500).send(err);
+        res.json(livro);
+    });
 });
 
 router.put("/", (req, res) => {
