@@ -1,6 +1,8 @@
+//#region Import
 import express from "express";
 import livros from "../data/livros.json";
 import mongoose from "mongoose";
+//#endregion
 
 const DB_URL = "mongodb+srv://admin:admin@cluster0.sbrpy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
@@ -32,15 +34,6 @@ router.get("/", (req, res) => { //traz os registros do MDB
 });
 
 router.get("/:id", (req, res) => {
-/*     const livro = livros.find(value => value.id == req.params.id);
-
-    if (livro) {
-        res.json(livro);
-    } else {
-        res.send("Livro não encontrado"); 
-    }
-
-    res.end(); */
 
     livrosModel.findById(req.params.id, (err, livro) => { //buscando o livro pelo ID
         if (livro) {
@@ -66,21 +59,27 @@ router.post("/", (req, res) => {
     });
 });
 
-router.put("/", (req, res) => {
-    console.log("tratando put");
-    res.end();
+router.put("/:id", (req, res) => { //atualiza os dados do livro
+    livrosModel.findById(req.params.id, (err, livro)=>{
+        if(err) res.status(500).send(err);
+        
+        if(livro){
+            livro.titulo = req.body.titulo;
+            livro.tipo = req.body.tipo;
+
+            livro.save().then((err, livro) =>{ //salva o put no banco de dados
+                if(err) res.status(500).send(err);
+                res.json(livro);
+            });
+        } else {
+            res.status(404).send(`Livro com o ID ${req.params.id} não encontrado`);
+        };
+    });
 });
 
 router.delete("/", (req, res) => {
     console.log("tratando delete");
     res.end();
 });
-
-/* router.param("id", (req, res, next, id) => {
-    if (isNaN(id)) {
-        next("[ERRO] id deve ser um número !!");
-    }
-    next();
-}); */ //valida se o id procurado é um número (utilizado no começo da API)
 
 export default router;
